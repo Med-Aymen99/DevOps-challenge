@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: helpet-backend
+  name: helpet-backend
+  namespace: helpet-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: helpet-backend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: helpet-backend
+    spec:
+      containers:
+      - image:  medaymen99/helpet-back:latest
+        name: helpet-backend
+        envFrom:
+        - secretRef:
+            name: helpet-backend-secret
+        - configMapRef:
+            name: helpet-backend-config
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3001
+        resources:
+          requests:
+            cpu: "100m"
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: helpet-frontend
+  name: helpet-frontend
+  namespace: helpet-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: helpet-frontend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: helpet-frontend
+    spec:
+      containers:
+      - image:  medaymen99/helpet-front:latest
+        imagePullPolicy: Always
+        name: helpet-frontend
+        envFrom:
+        - configMapRef:
+            name: helpet-frontend-config
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            cpu: "100m"

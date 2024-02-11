@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: helpet-backend-config
+  namespace: helpet-app
+data:
+  APP_PORT: "3001"
+  DB_HOST: "helpetdb.mysql.database.azure.com"
+  DB_PORT: "3306"
+  DB_USERNAME: "aymen"
+  DB_NAME: "helpetdb"
+  DB_TYPE: "mysql"
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: helpet-frontend-config
+  namespace: helpet-app
+data:
+  REACT_APP_API_URL: "http://20.120.20.64:80"
